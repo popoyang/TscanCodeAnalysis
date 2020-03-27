@@ -2,6 +2,8 @@
 
 import parser
 import re
+import sys
+import os
 from AnalysisXml import AnalysisXml
 import json
 class GenarateHtml:
@@ -32,14 +34,26 @@ class GenarateHtml:
                     fp.write(line)
             fp.close();
 
+def main():
+    analysisXml = AnalysisXml();
+    print(sys.argv[1])
+    analysisXml.parse(sys.argv[1])
+    xmlJson = json.dumps(analysisXml.__dict__)
+    ghtml=GenarateHtml();
+    ghtml.addResultData(os.getcwd()+"/TscanCodeAnalysis/data/template.html",os.getcwd()+"/TscanCodeAnalysis/data/result.html",xmlJson);
+
+
+
+
 
 if __name__ == '__main__':
-    analysisXml= AnalysisXml();
-    analysisXml.parse("./data/cmap.xml")
-    xmlJson = json.dumps(analysisXml.__dict__)
-
-    ghtml=GenarateHtml();
-    ghtml.addResultData("./data/template.html","./data/result.html",xmlJson);
+    main();
+    # analysisXml= AnalysisXml();
+    # analysisXml.parse("./data/cmap.xml")
+    # xmlJson = json.dumps(analysisXml.__dict__)
+    #
+    # ghtml=GenarateHtml();
+    # ghtml.addResultData("./data/template.html","./data/result.html",xmlJson);
 
 
 
